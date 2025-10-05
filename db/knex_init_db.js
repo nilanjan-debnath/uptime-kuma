@@ -26,7 +26,7 @@ async function createTables() {
     await knex.schema.createTable("group", (table) => {
         table.increments("id");
         table.string("name", 255).notNullable();
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
         table.boolean("public").notNullable().defaultTo(false);
         table.boolean("active").notNullable().defaultTo(true);
         table.integer("weight").notNullable().defaultTo(1000);
@@ -45,7 +45,7 @@ async function createTables() {
         table.string("password", 255).nullable();
         table.boolean("active").notNullable().defaultTo(true);
         table.boolean("default").notNullable().defaultTo(false);
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
 
         table.index("user_id", "proxy_user_id");
     });
@@ -77,19 +77,19 @@ async function createTables() {
         table.integer("weight").defaultTo(2000);
         table.string("hostname", 255);
         table.integer("port");
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
         table.string("keyword", 255);
         table.integer("maxretries").notNullable().defaultTo(0);
         table.boolean("ignore_tls").notNullable().defaultTo(false);
         table.boolean("upside_down").notNullable().defaultTo(false);
         table.integer("maxredirects").notNullable().defaultTo(10);
-        table.text("accepted_statuscodes_json").notNullable().defaultTo("[\"200-299\"]");
+        table.string("accepted_statuscodes_json", 255).notNullable().defaultTo("[\"200-299\"]");
         table.string("dns_resolve_type", 5);
         table.string("dns_resolve_server", 255);
         table.string("dns_last_result", 255);
         table.integer("retry_interval").notNullable().defaultTo(0);
         table.string("push_token", 20).defaultTo(null);
-        table.text("method").notNullable().defaultTo("GET");
+        table.string("method", 20).notNullable().defaultTo("GET");
         table.text("body").defaultTo(null);
         table.text("headers").defaultTo(null);
         table.text("basic_auth_user").defaultTo(null);
@@ -137,7 +137,7 @@ async function createTables() {
         table.smallint("status").notNullable();
 
         table.text("msg");
-        table.datetime("time").notNullable();
+        table.timestamp("time").notNullable();
         table.integer("ping");
         table.integer("duration").notNullable().defaultTo(0);
         table.integer("down_count").notNullable().defaultTo(0);
@@ -154,8 +154,8 @@ async function createTables() {
         table.string("title", 255).notNullable();
         table.text("content", 255).notNullable();
         table.string("style", 30).notNullable().defaultTo("warning");
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
-        table.datetime("last_updated_date");
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("last_updated_date");
         table.boolean("pin").notNullable().defaultTo(true);
         table.boolean("active").notNullable().defaultTo(true);
         table.integer("status_page_id").unsigned();
@@ -172,12 +172,12 @@ async function createTables() {
             .onUpdate("CASCADE");
         table.boolean("active").notNullable().defaultTo(true);
         table.string("strategy", 50).notNullable().defaultTo("single");
-        table.datetime("start_date");
-        table.datetime("end_date");
+        table.timestamp("start_date");
+        table.timestamp("end_date");
         table.time("start_time");
         table.time("end_time");
         table.string("weekdays", 250).defaultTo("[]");
-        table.text("days_of_month").defaultTo("[]");
+        table.string("days_of_month", 255).defaultTo("[]");
         table.integer("interval_day");
 
         table.index("active");
@@ -197,8 +197,8 @@ async function createTables() {
         table.boolean("search_engine_index").notNullable().defaultTo(true);
         table.boolean("show_tags").notNullable().defaultTo(false);
         table.string("password");
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
-        table.datetime("modified_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
+        table.datetime("modified_date").nullable();
         table.text("footer_text");
         table.text("custom_css");
         table.boolean("show_powered_by").notNullable().defaultTo(true);
@@ -227,8 +227,8 @@ async function createTables() {
             .references("id").inTable("maintenance")
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
-        table.datetime("start_date").notNullable();
-        table.datetime("end_date");
+        table.timestamp("start_date").notNullable();
+        table.timestamp("end_date");
         table.boolean("generated_next").defaultTo(false);
 
         table.index("maintenance_id");
@@ -298,7 +298,7 @@ async function createTables() {
         table.increments("id");
         table.string("name", 255).notNullable();
         table.string("color", 255).notNullable();
-        table.datetime("created_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("created_date").notNullable().defaultTo(knex.fn.now());
     });
 
     // monitor_tag
@@ -400,9 +400,9 @@ async function createTables() {
             .references("id").inTable("user")
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
-        table.dateTime("created_date").defaultTo(knex.fn.now()).notNullable();
+        table.timestamp("created_date").defaultTo(knex.fn.now()).notNullable();
         table.boolean("active").defaultTo(1).notNullable();
-        table.dateTime("expires").defaultTo(null);
+        table.timestamp("expires").defaultTo(null);
     });
 
     // 2023-06-30-1400-monitor-tls.js

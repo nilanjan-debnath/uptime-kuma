@@ -1,7 +1,7 @@
 exports.up = function (knex) {
     return knex.schema
         .alterTable("monitor", function (table) {
-            table.text("conditions").notNullable().defaultTo("[]");
+            table.string("conditions", 255).notNullable().defaultTo("[]");
         });
 };
 
