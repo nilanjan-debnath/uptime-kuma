@@ -90,6 +90,11 @@
                         <input id="floatingInput" v-model="dbConfig.dbName" type="text" class="form-control" required>
                         <label for="floatingInput">{{ $t("dbName") }}</label>
                     </div>
+
+                    <div class="form-check form-switch form-control mt-3 short">
+                        <label class="form-check-label" for="sslCheck">{{  "Enable SSH Connection" }}</label>  <!-- TODO: Have to add as a key in /src/lang folder -->
+                        <input id="floatingInput" v-model="dbConfig.ssl" type="checkbox" role="switch" class="form-check-input">
+                    </div>
                 </template>
 
                 <button class="btn btn-primary mt-4 short" type="submit" :disabled="disabledButton">
@@ -117,6 +122,7 @@ export default {
                 username: "",
                 password: "",
                 dbName: "kuma",
+                ssl: false,
             },
             info: {
                 needSetup: false,
@@ -221,6 +227,14 @@ export default {
     > .form-control {
         padding-left: 1.3rem;
     }
+}
+
+.form-check {
+    height: calc(3.5rem + 2px);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .short {

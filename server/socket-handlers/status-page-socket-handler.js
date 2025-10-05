@@ -290,6 +290,7 @@ module.exports.statusPageSocketHandler = (socket) => {
             statusPage.theme = "auto";
             statusPage.icon = "";
             statusPage.autoRefreshInterval = 300;
+            statusPage.modified_date = R.isoDateTime();
             await R.store(statusPage);
 
             callback({
